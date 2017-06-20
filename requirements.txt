@@ -6,5 +6,6 @@ dash==0.17.4
 dash-renderer==0.7.2
 dash-html-components==0.6.0
 dash-core-components==0.5.0
+
 Ta-Lib==0.4.10
 fix-yahoo-finance==0.0.17
