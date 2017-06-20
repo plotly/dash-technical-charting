@@ -6,3 +6,4 @@ dash-html-components==0.6.0
 dash-core-components==0.5.0
 fix-yahoo-finance==0.0.17
 pandas_datareader==0.3.0.post0
+pandas==0.19.2
