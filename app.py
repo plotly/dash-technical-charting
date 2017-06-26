@@ -101,11 +101,13 @@ etf = ['SPY', 'XLF', 'GDX', 'EEM', 'VXX', 'IWM', 'UVXY', 'UXO', 'GDXJ', 'QQQ']
 tickers = sp500 + etf
 tickers = [dict(label=str(ticker), value=str(ticker))
            for ticker in tickers]
+print(tickers)
 
 # Dynamic binding
 functions = dir(qm.ta)[9:-4]
 functions = [dict(label=str(function[4:]), value=str(function))
              for function in functions]
+print(functions)
 
 # Layout
 app.layout = html.Div(
