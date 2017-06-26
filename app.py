@@ -190,32 +190,32 @@ def update_graph_from_dropdown(dropdown, multi, arglist):
         pass
     ch = qm.Chart(df)
 
-    # Get functions and arglist for technical indicators
-    if arglist:
-        arglist = arglist.replace('(', '').replace(')', '').split(';')
-        arglist = [args.strip() for args in arglist]
-        for function, args in zip(multi, arglist):
-            if args:
-                args = args.split(',')
-                newargs = []
-                for arg in args:
-                    try:
-                        arg = int(arg)
-                    except:
-                        try:
-                            arg = float(arg)
-                        except:
-                            pass
-                    newargs.append(arg)
-                print(newargs)
-                # Dynamic calling
-                getattr(qm, function)(ch, *newargs)
-            else:
-                getattr(qm, function)(ch)
-    else:
-        for function in multi:
-            # Dynamic calling
-            getattr(qm, function)(ch)
+    # # Get functions and arglist for technical indicators
+    # if arglist:
+    #     arglist = arglist.replace('(', '').replace(')', '').split(';')
+    #     arglist = [args.strip() for args in arglist]
+    #     for function, args in zip(multi, arglist):
+    #         if args:
+    #             args = args.split(',')
+    #             newargs = []
+    #             for arg in args:
+    #                 try:
+    #                     arg = int(arg)
+    #                 except:
+    #                     try:
+    #                         arg = float(arg)
+    #                     except:
+    #                         pass
+    #                 newargs.append(arg)
+    #             print(newargs)
+    #             # Dynamic calling
+    #             getattr(qm, function)(ch, *newargs)
+    #         else:
+    #             getattr(qm, function)(ch)
+    # else:
+    #     for function in multi:
+    #         # Dynamic calling
+    #         getattr(qm, function)(ch)
 
     # Return plot as figure
     fig = ch.to_figure(width=1100)
@@ -225,4 +225,4 @@ def update_graph_from_dropdown(dropdown, multi, arglist):
 # In[]:
 # Run the Dash app
 if __name__ == '__main__':
-    app.server.run(debug=True, threaded=True)
+    app.server.run()
