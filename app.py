@@ -4,7 +4,7 @@ import os
 from random import randint
 
 import quantmod as qm
-import fix_yahoo_finance as yf
+import pandas_datareader.data as web
 
 import flask
 import dash
@@ -182,7 +182,7 @@ def display_control(multi):
 def update_graph_from_dropdown(dropdown, multi, arglist):
 
     # Get Quantmod Chart
-    df = yf.download(dropdown, start='2016-01-01')
+    df = web.DataReader(dropdown, data_source='google', start='2016-01-01')
     try:
         df['Close'] = df['Adj Close']
     except:
