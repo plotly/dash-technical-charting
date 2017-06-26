@@ -4,6 +4,7 @@ import os
 from random import randint
 
 import quantmod as qm
+import pandas as pd
 import pandas_datareader.data as web
 
 import flask
@@ -185,39 +186,40 @@ app.layout = html.Div(
 def update_graph_from_dropdown(dropdown, multi, arglist):
 
     # Get Quantmod Chart
-    df = web.DataReader(dropdown, data_source='google', start='2016-01-01')
-    try:
-        df['Close'] = df['Adj Close']
-    except:
-        pass
+    # df = web.DataReader(dropdown, data_source='google', start='2016-01-01')
+    # try:
+    #     df['Close'] = df['Adj Close']
+    # except:
+    #     pass
+    df = pd.read_csv('data/aapl.csv')
     ch = qm.Chart(df)
 
-    # # Get functions and arglist for technical indicators
-    # if arglist:
-    #     arglist = arglist.replace('(', '').replace(')', '').split(';')
-    #     arglist = [args.strip() for args in arglist]
-    #     for function, args in zip(multi, arglist):
-    #         if args:
-    #             args = args.split(',')
-    #             newargs = []
-    #             for arg in args:
-    #                 try:
-    #                     arg = int(arg)
-    #                 except:
-    #                     try:
-    #                         arg = float(arg)
-    #                     except:
-    #                         pass
-    #                 newargs.append(arg)
-    #             print(newargs)
-    #             # Dynamic calling
-    #             getattr(qm, function)(ch, *newargs)
-    #         else:
-    #             getattr(qm, function)(ch)
-    # else:
-    #     for function in multi:
-    #         # Dynamic calling
-    #         getattr(qm, function)(ch)
+    # Get functions and arglist for technical indicators
+    if arglist:
+        arglist = arglist.replace('(', '').replace(')', '').split(';')
+        arglist = [args.strip() for args in arglist]
+        for function, args in zip(multi, arglist):
+            if args:
+                args = args.split(',')
+                newargs = []
+                for arg in args:
+                    try:
+                        arg = int(arg)
+                    except:
+                        try:
+                            arg = float(arg)
+                        except:
+                            pass
+                    newargs.append(arg)
+                print(newargs)
+                # Dynamic calling
+                getattr(qm, function)(ch, *newargs)
+            else:
+                getattr(qm, function)(ch)
+    else:
+        for function in multi:
+            # Dynamic calling
+            getattr(qm, function)(ch)
 
     # Return plot as figure
     fig = ch.to_figure(width=1100)
