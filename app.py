@@ -191,7 +191,7 @@ def update_graph_from_dropdown(dropdown, multi, arglist):
     #     df['Close'] = df['Adj Close']
     # except:
     #     pass
-    df = pd.read_csv('data/aapl.csv')
+    df = pd.read_csv('data/aapl.csv', index_col='date')
     ch = qm.Chart(df)
 
     # Get functions and arglist for technical indicators
