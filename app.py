@@ -11,7 +11,7 @@ import dash
 from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_html_components as html
-from flask_caching import Cache
+# from flask_caching import Cache
 
 
 # In[]:
@@ -30,14 +30,14 @@ app.css.append_css({
     )
 })
 
-# if 'DYNO' in os.environ:
-#     app.scripts.append_script({
-#         'external_url': 'https://cdn.rawgit.com/chriddyp/ca0d8f02a1659981a0ea7f013a378bbd/raw/e79f3f789517deec58f41251f7dbb6bee72c44ab/plotly_ga.js'  # noqa: E501
-#     })
+if 'DYNO' in os.environ:
+    app.scripts.append_script({
+        'external_url': 'https://cdn.rawgit.com/chriddyp/ca0d8f02a1659981a0ea7f013a378bbd/raw/e79f3f789517deec58f41251f7dbb6bee72c44ab/plotly_ga.js'  # noqa: E501
+    })
 
 # Add caching
-cache = Cache(app.server, config={'CACHE_TYPE': 'simple'})
-timeout = 60 * 60  # 1 hour
+# cache = Cache(app.server, config={'CACHE_TYPE': 'simple'})
+# timeout = 60 * 60  # 1 hour
 
 # Controls
 sp500 = ['AAPL', 'ABT', 'ABBV', 'ACN', 'ACE', 'ADBE', 'ADT', 'AAP', 'AES',
@@ -153,7 +153,7 @@ app.layout = html.Div(
                 )
             ],
             id='arg-controls',
-            style={'display': 'none'}
+            style={'margin-bottom': '20', 'padding-left': '40'}
         ),
         dcc.Graph(id='output')
     ],
@@ -167,18 +167,19 @@ app.layout = html.Div(
 )
 
 
-@app.callback(Output('arg-controls', 'style'), [Input('multi', 'value')])
-def display_control(multi):
-    if not multi:
-        return {'display': 'none'}
-    else:
-        return {'margin-bottom': '20', 'padding-left': '40'}
+# @app.callback(Output('arg-controls', 'style'), [Input('multi', 'value')])
+# def display_control(multi):
+#     if not multi:
+#         return {'display': 'none'}
+#     else:
+#         return {'margin-bottom': '20', 'padding-left': '40'}
+#
 
 
 @app.callback(Output('output', 'figure'), [Input('dropdown', 'value'),
                                            Input('multi', 'value'),
                                            Input('arglist', 'value')])
-@cache.memoize(timeout=timeout)
+# @cache.memoize(timeout=timeout)
 def update_graph_from_dropdown(dropdown, multi, arglist):
 
     # Get Quantmod Chart
