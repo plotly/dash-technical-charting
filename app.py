@@ -18,7 +18,7 @@ from flask_caching import Cache
 # In[]:
 # Setup the app
 server = flask.Flask(__name__)
-server.secret_key = os.environ.get('secret_key')
+server.secret_key = os.environ.get('secret_key', 'secret')
 app = dash.Dash(__name__, server=server)
 
 app.scripts.config.serve_locally = False
