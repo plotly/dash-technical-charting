@@ -1,7 +1,6 @@
 # In[]:
 # Import required libraries
 import os
-from random import randint
 import datetime as dt
 
 import quantmod as qm
@@ -40,7 +39,7 @@ if 'DYNO' in os.environ:
         'external_url': 'https://cdn.rawgit.com/chriddyp/ca0d8f02a1659981a0ea7f013a378bbd/raw/e79f3f789517deec58f41251f7dbb6bee72c44ab/plotly_ga.js'  # noqa: E501
     })
 
-Add caching
+#Add caching
 cache = Cache(app.server, config={'CACHE_TYPE': 'simple'})
 timeout = 60 * 60  # 1 hour
 
