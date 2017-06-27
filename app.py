@@ -134,33 +134,33 @@ app.layout = html.Div(
                     'width': '510', 'display': 'inline-block',
                     'padding-left': '40', 'margin-bottom': '20'}
             ),
-        #     html.Div(
-        #         [
-        #             html.Label('Select technical indicators:'),
-        #             dcc.Dropdown(
-        #                 id='multi',
-        #                 options=functions,
-        #                 multi=True,
-        #                 value=['add_BBANDS', 'add_RSI', 'add_MACD'],
-        #             ),
-        #         ],
-        #         style={
-        #             'width': '510', 'display': 'inline-block',
-        #             'padding-right': '40', 'margin-bottom': '20'}
-        #     ),
+            html.Div(
+                [
+                    html.Label('Select technical indicators:'),
+                    dcc.Dropdown(
+                        id='multi',
+                        options=functions,
+                        multi=True,
+                        value=['add_BBANDS', 'add_RSI', 'add_MACD'],
+                    ),
+                ],
+                style={
+                    'width': '510', 'display': 'inline-block',
+                    'padding-right': '40', 'margin-bottom': '20'}
+            ),
         ]),
-        # html.Div(
-        #     [
-        #         html.Label('Specify parameters of technical indicators:'),
-        #         html.P('Use , to separate arguments and ; to separate indicators. () and spaces are ignored'),  # noqa: E501
-        #         dcc.Input(
-        #             id='arglist',
-        #             style={'height': '32', 'width': '1020'}
-        #         )
-        #     ],
-        #     id='arg-controls',
-        #     style={'margin-bottom': '20', 'padding-left': '40'}
-        # ),
+        html.Div(
+            [
+                html.Label('Specify parameters of technical indicators:'),
+                html.P('Use , to separate arguments and ; to separate indicators. () and spaces are ignored'),  # noqa: E501
+                dcc.Input(
+                    id='arglist',
+                    style={'height': '32', 'width': '1020'}
+                )
+            ],
+            id='arg-controls',
+            style={'margin-bottom': '20', 'padding-left': '40'}
+        ),
         dcc.Graph(id='output')
     ],
     style={
@@ -184,8 +184,10 @@ app.layout = html.Div(
                                           # Input('multi', 'value'),
                                           # Input('arglist', 'value')])
 # @cache.memoize(timeout=timeout)
-@app.callback(Output('output', 'figure'), [Input('dropdown', 'value')])
-def update_graph_from_dropdown(dropdown):
+@app.callback(Output('output', 'figure'), [Input('dropdown', 'value')
+                                           Input('multi', 'value'),
+                                           Input('arglist', 'value')])
+def update_graph_from_dropdown(dropdown, multi, arglist):
 
     # Get Quantmod Chart
     try:
@@ -196,32 +198,32 @@ def update_graph_from_dropdown(dropdown):
     print('Loading')
     ch = qm.Chart(df)
 
-    # # Get functions and arglist for technical indicators
-    # if arglist:
-    #     arglist = arglist.replace('(', '').replace(')', '').split(';')
-    #     arglist = [args.strip() for args in arglist]
-    #     for function, args in zip(multi, arglist):
-    #         if args:
-    #             args = args.split(',')
-    #             newargs = []
-    #             for arg in args:
-    #                 try:
-    #                     arg = int(arg)
-    #                 except:
-    #                     try:
-    #                         arg = float(arg)
-    #                     except:
-    #                         pass
-    #                 newargs.append(arg)
-    #             print(newargs)
-    #             # Dynamic calling
-    #             getattr(qm, function)(ch, *newargs)
-    #         else:
-    #             getattr(qm, function)(ch)
-    # else:
-    #     for function in multi:
-    #         # Dynamic calling
-    #         getattr(qm, function)(ch)
+    # Get functions and arglist for technical indicators
+    if arglist:
+        arglist = arglist.replace('(', '').replace(')', '').split(';')
+        arglist = [args.strip() for args in arglist]
+        for function, args in zip(multi, arglist):
+            if args:
+                args = args.split(',')
+                newargs = []
+                for arg in args:
+                    try:
+                        arg = int(arg)
+                    except:
+                        try:
+                            arg = float(arg)
+                        except:
+                            pass
+                    newargs.append(arg)
+                print(newargs)
+                # Dynamic calling
+                getattr(qm, function)(ch, *newargs)
+            else:
+                getattr(qm, function)(ch)
+    else:
+        for function in multi:
+            # Dynamic calling
+            getattr(qm, function)(ch)
 
     # Return plot as figure
     fig = ch.to_figure(width=1100)
