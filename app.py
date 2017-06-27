@@ -208,7 +208,7 @@ def update_graph_from_dropdown(dropdown, multi, arglist):
                         try:
                             arg = float(arg)
                         except:
-                        pass
+                            pass
                     newargs.append(arg)
                 print(newargs)
                 # Dynamic calling
