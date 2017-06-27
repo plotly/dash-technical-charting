@@ -191,8 +191,8 @@ def update_graph_from_dropdown(dropdown):
     try:
         df = web.DataReader(dropdown, 'google', dt.datetime(2016, 1, 1), dt.datetime.now())
     except:
-        continue
-        
+        pass
+
     print('Loading')
     ch = qm.Chart(df)
 
