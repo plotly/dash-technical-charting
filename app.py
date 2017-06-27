@@ -189,6 +189,7 @@ def update_graph_from_dropdown(dropdown, multi, arglist):
     #     df['Close'] = df['Adj Close']
     # except:
     #     pass
+    print('Trying to load')
     df = pd.read_csv('data/aapl.csv', index_col='Date')
     print(df.columns)
     ch = qm.Chart(df)
