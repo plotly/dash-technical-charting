@@ -40,8 +40,8 @@ if 'DYNO' in os.environ:
     })
 
 #Add caching
-cache = Cache(app.server, config={'CACHE_TYPE': 'simple'})
-timeout = 60 * 60  # 1 hour
+# cache = Cache(app.server, config={'CACHE_TYPE': 'simple'})
+# timeout = 60 * 60  # 1 hour
 
 # Controls
 sp500 = ['AAPL', 'ABT', 'ABBV', 'ACN', 'ACE', 'ADBE', 'ADT', 'AAP', 'AES',
@@ -183,7 +183,7 @@ app.layout = html.Div(
 
                                           # Input('multi', 'value'),
                                           # Input('arglist', 'value')])
-@cache.memoize(timeout=timeout)
+# @cache.memoize(timeout=timeout)
 @app.callback(Output('output', 'figure'), [Input('dropdown', 'value')])
 def update_graph_from_dropdown(dropdown):
 
