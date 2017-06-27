@@ -19,7 +19,7 @@ import dash_html_components as html
 # In[]:
 # Setup the app
 server = flask.Flask(__name__)
-server.secret_key = os.environ.get('secret_key', 'secret')
+server.secret_key = os.environ.get('secret_key')
 app = dash.Dash(__name__, server=server)
 
 app.scripts.config.serve_locally = False
@@ -35,14 +35,14 @@ app.css.append_css({
     )
 })
 
-# if 'DYNO' in os.environ:
-#     app.scripts.append_script({
-#         'external_url': 'https://cdn.rawgit.com/chriddyp/ca0d8f02a1659981a0ea7f013a378bbd/raw/e79f3f789517deec58f41251f7dbb6bee72c44ab/plotly_ga.js'  # noqa: E501
-#     })
+if 'DYNO' in os.environ:
+    app.scripts.append_script({
+        'external_url': 'https://cdn.rawgit.com/chriddyp/ca0d8f02a1659981a0ea7f013a378bbd/raw/e79f3f789517deec58f41251f7dbb6bee72c44ab/plotly_ga.js'  # noqa: E501
+    })
 
-# Add caching
-# cache = Cache(app.server, config={'CACHE_TYPE': 'simple'})
-# timeout = 60 * 60  # 1 hour
+Add caching
+cache = Cache(app.server, config={'CACHE_TYPE': 'simple'})
+timeout = 60 * 60  # 1 hour
 
 # Controls
 sp500 = ['AAPL', 'ABT', 'ABBV', 'ACN', 'ACE', 'ADBE', 'ADT', 'AAP', 'AES',
@@ -184,7 +184,7 @@ app.layout = html.Div(
 
                                           # Input('multi', 'value'),
                                           # Input('arglist', 'value')])
-# @cache.memoize(timeout=timeout)
+@cache.memoize(timeout=timeout)
 @app.callback(Output('output', 'figure'), [Input('dropdown', 'value')])
 def update_graph_from_dropdown(dropdown):
 
