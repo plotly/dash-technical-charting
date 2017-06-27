@@ -13,7 +13,7 @@ import dash
 from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_html_components as html
-# from flask_caching import Cache
+from flask_caching import Cache
 
 
 # In[]:
