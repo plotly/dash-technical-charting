@@ -195,8 +195,6 @@ def update_graph_from_dropdown(dropdown):
     # except:
     #     pass
     print('Trying to load')
-    df = pd.read_csv('data/aapl.csv', index_col='Date')
-    print(df.columns)
     ch = qm.Chart(df)
 
     # # Get functions and arglist for technical indicators
