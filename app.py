@@ -4,7 +4,6 @@ import os
 import datetime as dt
 
 import quantmod as qm
-import pandas as pd
 import pandas_datareader.data as web
 
 import flask
@@ -27,17 +26,6 @@ dcc._js_dist[0]['external_url'] = 'https://cdn.plot.ly/plotly-finance-1.28.0.min
 
 # In[]:
 # Put your Dash code here
-app.css.append_css({
-    'external_url': (
-        'https://rawgit.com/chriddyp/0247653a7c52feb4c48437e1c1837f75'
-        '/raw/a68333b876edaf62df2efa7bac0e9b3613258851/dash.css'
-    )
-})
-
-if 'DYNO' in os.environ:
-    app.scripts.append_script({
-        'external_url': 'https://cdn.rawgit.com/chriddyp/ca0d8f02a1659981a0ea7f013a378bbd/raw/e79f3f789517deec58f41251f7dbb6bee72c44ab/plotly_ga.js'  # noqa: E501
-    })
 
 # Add caching
 cache = Cache(app.server, config={'CACHE_TYPE': 'simple'})
@@ -105,13 +93,11 @@ etf = ['SPY', 'XLF', 'GDX', 'EEM', 'VXX', 'IWM', 'UVXY', 'UXO', 'GDXJ', 'QQQ']
 tickers = sp500 + etf
 tickers = [dict(label=str(ticker), value=str(ticker))
            for ticker in tickers]
-print(tickers)
 
 # Dynamic binding
 functions = dir(qm.ta)[9:-4]
 functions = [dict(label=str(function[4:]), value=str(function))
              for function in functions]
-print(functions)
 
 # Layout
 app.layout = html.Div(
@@ -159,7 +145,7 @@ app.layout = html.Div(
                 )
             ],
             id='arg-controls',
-            style={'margin-bottom': '20', 'padding-left': '40'}
+            style={'display': 'none'}
         ),
         dcc.Graph(id='output')
     ],
@@ -227,6 +213,21 @@ def update_graph_from_dropdown(dropdown, multi, arglist):
 
 
 # In[]:
+# External css
+
+external_css = ["https://fonts.googleapis.com/css?family=Overpass:400,400i,700,700i",
+                "https://cdn.rawgit.com/plotly/dash-app-stylesheets/2cc54b8c03f4126569a3440aae611bbef1d7a5dd/stylesheet.css"]
+
+for css in external_css:
+    app.css.append_css({"external_url": css})
+
+if 'DYNO' in os.environ:
+    app.scripts.append_script({
+        'external_url': 'https://cdn.rawgit.com/chriddyp/ca0d8f02a1659981a0ea7f013a378bbd/raw/e79f3f789517deec58f41251f7dbb6bee72c44ab/plotly_ga.js'
+    })
+
+
+# In[]:
 # Run the Dash app
 if __name__ == '__main__':
-    app.server.run(port=5002)
+    app.server.run()
