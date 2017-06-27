@@ -12,4 +12,4 @@ To learn more check out our [documentation](https://plot.ly/dash).
 
 The following are screenshots for the app in this repo:
 
-![Alt desc](https://cdn.rawgit.com/plotly/dash-technical-charting/master/screenshots/Screenshot1.png)
+![Alt desc](https://raw.githubusercontent.com/plotly/dash-technical-charting/d3561c5426fba965fb7030410913ca3b5c89c31d/screenshots/Screenshot1.png?token=AK-nZOTHb7vTWF9xxIWLWSqqdG_lf25zks5ZW9QWwA%3D%3D)
