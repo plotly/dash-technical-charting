@@ -18,8 +18,11 @@ import dash_html_components as html
 # In[]:
 # Setup the app
 server = flask.Flask(__name__)
-server.secret_key = os.environ.get('secret_key', str(randint(0, 1000000)))
+server.secret_key = os.environ.get('secret_key', 'secret')
 app = dash.Dash(__name__, server=server)
+
+app.scripts.config.serve_locally = False
+dcc._js_dist[0]['external_url'] = 'https://cdn.plot.ly/plotly-finance-1.28.0.min.js'
 
 
 # In[]:
@@ -184,7 +187,7 @@ app.layout = html.Div(
 def update_graph_from_dropdown(dropdown, multi, arglist):
 
     # Get Quantmod Chart
-    # df = web.DataReader(dropdown, data_source='google', start='2016-01-01')
+    df = web.DataReader(dropdown, 'google', dt.datetime(2016, 1, 1), dt.datetime.now())
     # try:
     #     df['Close'] = df['Adj Close']
     # except:
