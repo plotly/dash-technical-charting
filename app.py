@@ -190,11 +190,11 @@ def update_graph_from_dropdown(dropdown):
 
     # Get Quantmod Chart
     df = web.DataReader(dropdown, 'google', dt.datetime(2016, 1, 1), dt.datetime.now())
-    # try:
-    #     df['Close'] = df['Adj Close']
-    # except:
-    #     pass
-    print('Trying to load')
+    try:
+        df['Close'] = df['Adj Close']
+    except:
+        pass
+    print('Loading')
     ch = qm.Chart(df)
 
     # # Get functions and arglist for technical indicators
