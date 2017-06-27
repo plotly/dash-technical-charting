@@ -180,11 +180,8 @@ app.layout = html.Div(
 #         return {'margin-bottom': '20', 'padding-left': '40'}
 #
 
-
-                                          # Input('multi', 'value'),
-                                          # Input('arglist', 'value')])
 # @cache.memoize(timeout=timeout)
-@app.callback(Output('output', 'figure'), [Input('dropdown', 'value')
+@app.callback(Output('output', 'figure'), [Input('dropdown', 'value'),
                                            Input('multi', 'value'),
                                            Input('arglist', 'value')])
 def update_graph_from_dropdown(dropdown, multi, arglist):
@@ -192,11 +189,10 @@ def update_graph_from_dropdown(dropdown, multi, arglist):
     # Get Quantmod Chart
     try:
         df = web.DataReader(dropdown, 'google', dt.datetime(2016, 1, 1), dt.datetime.now())
+        print('Loading')
+        ch = qm.Chart(df)
     except:
         pass
-
-    print('Loading')
-    ch = qm.Chart(df)
 
     # Get functions and arglist for technical indicators
     if arglist:
@@ -233,4 +229,4 @@ def update_graph_from_dropdown(dropdown, multi, arglist):
 # In[]:
 # Run the Dash app
 if __name__ == '__main__':
-    app.server.run(port=5001)
+    app.server.run(port=5002)
