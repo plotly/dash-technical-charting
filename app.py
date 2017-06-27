@@ -39,9 +39,9 @@ if 'DYNO' in os.environ:
         'external_url': 'https://cdn.rawgit.com/chriddyp/ca0d8f02a1659981a0ea7f013a378bbd/raw/e79f3f789517deec58f41251f7dbb6bee72c44ab/plotly_ga.js'  # noqa: E501
     })
 
-#Add caching
-# cache = Cache(app.server, config={'CACHE_TYPE': 'simple'})
-# timeout = 60 * 60  # 1 hour
+# Add caching
+cache = Cache(app.server, config={'CACHE_TYPE': 'simple'})
+timeout = 60 * 60  # 1 hour
 
 # Controls
 sp500 = ['AAPL', 'ABT', 'ABBV', 'ACN', 'ACE', 'ADBE', 'ADT', 'AAP', 'AES',
@@ -172,15 +172,15 @@ app.layout = html.Div(
     }
 )
 
-# @app.callback(Output('arg-controls', 'style'), [Input('multi', 'value')])
-# def display_control(multi):
-#     if not multi:
-#         return {'display': 'none'}
-#     else:
-#         return {'margin-bottom': '20', 'padding-left': '40'}
-#
+@app.callback(Output('arg-controls', 'style'), [Input('multi', 'value')])
+def display_control(multi):
+    if not multi:
+        return {'display': 'none'}
+    else:
+        return {'margin-bottom': '20', 'padding-left': '40'}
 
-# @cache.memoize(timeout=timeout)
+
+@cache.memoize(timeout=timeout)
 @app.callback(Output('output', 'figure'), [Input('dropdown', 'value'),
                                            Input('multi', 'value'),
                                            Input('arglist', 'value')])
