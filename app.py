@@ -18,7 +18,7 @@ from flask_caching import Cache
 # Setup the app
 server = flask.Flask(__name__)
 server.secret_key = os.environ.get('secret_key', 'secret')
-app = dash.Dash(__name__, server=server, url_base_pathname='/dash/gallery/technical-charting/', csrf_protect=False)
+app = dash.Dash(__name__, server=server, csrf_protect=False)
 
 app.scripts.config.serve_locally = False
 dcc._js_dist[0]['external_url'] = 'https://cdn.plot.ly/plotly-finance-1.28.0.min.js'
