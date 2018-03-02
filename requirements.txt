@@ -1,9 +1,9 @@
 gunicorn>=19.7.1
 plotly>=2.0.9
-dash==0.17.4
-dash-renderer==0.7.2
-dash-html-components==0.6.0
-dash-core-components==0.5.0
+dash==0.21.0
+dash-renderer==0.11.3
+dash-html-components==0.9.0
+dash-core-components==0.18.1
 pandas_datareader==0.3.0.post0
 pandas==0.19.2
 Flask-Caching==1.2.0
